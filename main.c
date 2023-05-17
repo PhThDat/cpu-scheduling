@@ -42,7 +42,9 @@ int main() {
     }
 
     inputProcess(n, P);
-    PCB* output = schedule(n, P, sessionTime, criteria);
+
+    PCB* output = schedule(n, P, sessionTime, criteria); // main function
+
     printf("\n");
     quickSort(output, 0, n-1, SORT_BY_ARRIVAL);
     printProcess(n, output);
