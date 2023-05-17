@@ -45,8 +45,7 @@ int main() {
 
     PCB* output = schedule(n, P, sessionTime, criteria); // main function
 
-    printf("\n");
-    quickSort(output, 0, n-1, SORT_BY_ARRIVAL);
+    printf("\n\nAfter scheduling:\n");
     printProcess(n, output);
     printf("AWT: %f\n", calculateAWT(n, output));
     printf("ATaT: %f\n", calculateATaT(n, output));
