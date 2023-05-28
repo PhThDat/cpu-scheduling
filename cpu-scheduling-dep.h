@@ -178,7 +178,7 @@ PCB* schedule(
         int sessionTime = howLongSessionLasts(*currentCpuProcess, Ready);
         passedTime += sessionTime;
         currentCpuProcess->iBurst -= sessionTime;
-        printf("P%c \x1b[34m%d \x1b[35m", currentCpuProcess->iPID, passedTime);
+        printf("P%d \x1b[34m%d \x1b[35m", currentCpuProcess->iPID, passedTime);
 
         if (currentCpuProcess->iBurst == 0) {
             currentCpuProcess->iFinish = passedTime;
