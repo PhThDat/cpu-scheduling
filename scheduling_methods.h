@@ -4,7 +4,7 @@
 #include "PCB.h"
 
 // FCFS
-int FCFS_sessionTime(PCB p, PCB Ready[]) {
+int FCFS_sessionTime(PCB p, PCB Ready[], int iReady) {
     return p.iBurst;
 }
 
@@ -13,7 +13,7 @@ bool FCFS_schedCriteria(PCB p, int index, int iReady, PCB Ready[]) {
 }
 
 // SJF
-int SJF_sessionTime(PCB p, PCB Ready[]) {
+int SJF_sessionTime(PCB p, PCB Ready[], int iReady) {
     return p.iBurst;
 }
 
@@ -28,7 +28,7 @@ bool SJF_schedCriteria(PCB p, int index, int iReady, PCB Ready[]) {
 }
 
 // SRTF
-int SRTF_sessionTime(PCB p, PCB Ready[]) {
+int SRTF_sessionTime(PCB p, PCB Ready[], int iReady) {
     return 1;
 }
 
@@ -44,7 +44,7 @@ bool SRTF_schedCriteria(PCB p, int index, int iReady, PCB Ready[]) {
 }
 
 // RR
-int RR_sessionTime(PCB p, PCB Ready[]) {
+int RR_sessionTime(PCB p, PCB Ready[], int iReady) {
     return p.iBurst < 5 ? p.iBurst : 5;
 }
 

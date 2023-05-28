@@ -109,6 +109,8 @@ float calculateATaT(int n, PCB P[]) {
     return (float)sum / n;
 }
 
+
+
 void pushToReady(int* iRemain, PCB Input[], int* iReady, PCB Ready[], int* passedTime) {
     // If CPU is idle (no Ready process available)
     if (*iReady == 0 && Input[0].iArrival > *passedTime) {
@@ -122,12 +124,10 @@ void pushToReady(int* iRemain, PCB Input[], int* iReady, PCB Ready[], int* passe
     }
 }
 
-
-
 PCB* schedule(
     int n, 
     PCB Input[], 
-    int howLongSessionLasts(PCB P, PCB Ready[]),
+    int howLongSessionLasts(PCB P, PCB Ready[], int iReady),
     bool selectReadyProcessCriteria(PCB P, int index, int iReady, PCB Ready[])
 ) {
     PCB Ready[n];
@@ -147,9 +147,10 @@ PCB* schedule(
     printProcess(n, Input);
 
     int passedTime = 0;
-    printf("GANTT CHART: \x1b[34m%d \x1b[35m", Input[0].iArrival);
+    printf("\nGANTT CHART: \x1b[34m%d \x1b[35m", Input[0].iArrival);
 
     pushToReady(&iRemain, Input, &iReady, Ready, &passedTime);
+    int prevCpuPID = -1;
 
     // Process until all processes are finished
     while (iTerminated < n) {
@@ -175,10 +176,13 @@ PCB* schedule(
         }
 
         // Calculate remaining Burst of chosen process
-        int sessionTime = howLongSessionLasts(*currentCpuProcess, Ready);
+        int sessionTime = howLongSessionLasts(*currentCpuProcess, Ready, iReady);
         passedTime += sessionTime;
         currentCpuProcess->iBurst -= sessionTime;
-        printf("P%d \x1b[34m%d \x1b[35m", currentCpuProcess->iPID, passedTime);
+
+        if (currentCpuProcess->iPID != prevCpuPID)
+            printf("P%d \x1b[34m%d \x1b[35m", currentCpuProcess->iPID, passedTime);
+        prevCpuPID = currentCpuProcess->iPID;
 
         if (currentCpuProcess->iBurst == 0) {
             currentCpuProcess->iFinish = passedTime;
